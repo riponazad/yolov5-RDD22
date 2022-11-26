@@ -21,14 +21,14 @@ if __name__=='__main__':
     model = torch.hub.load('ultralytics/yolov5', 'custom', args.model_path)
     model.to(device)
 
-    open(os.path.join(args.output_dir, "_prediction.txt"), "w").close()
+    open(args.out_name + "_prediction.txt", "w").close()
 
     imgs_list = os.listdir(args.root_dir)
     for img_name in imgs_list:
         img_path = os.path.join(args.root_dir, img_name)
         pred = model(img_path)
         result = pred.pandas().xyxy[0]
-        with open(os.path.join(args.output_dir, "_prediction.txt"), "a") as f:
+        with open(args.out_name + "_prediction.txt", "a") as f:
             f.write(str(img_name)+",")
             for i, row in result.iterrows():
                 if i == 5:

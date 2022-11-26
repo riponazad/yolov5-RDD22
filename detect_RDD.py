@@ -7,15 +7,11 @@ def parse_args():
 
     parser.add_argument("--root_dir", default="", help="Specify the path to the root folder contains test images.")
     parser.add_argument("--model_path", default="", help="Choose a prefered pretrained model(.pt)")
-    parser.add_argument("--output_dir", default="saved_predictions", 
-                        help="Specify the path to save model's prediction results.") 
+    parser.add_argument("--out_name", default="result", 
+                        help="Specify the result txt filename.") 
 
     args = parser.parse_args()
     return args
-
-def detect(model, img):
-    res = model(img)
-    print(res.xyxy[0])
 
 
 
@@ -25,8 +21,22 @@ if __name__=='__main__':
     model = torch.hub.load('ultralytics/yolov5', 'custom', args.model_path)
     model.to(device)
 
+    open(os.path.join(args.output_dir, "_prediction.txt"), "w").close()
+
     imgs_list = os.listdir(args.root_dir)
     for img_name in imgs_list:
         img_path = os.path.join(args.root_dir, img_name)
-        pred = detect(model, img_path)
-        break
+        pred = model(img_path)
+        result = pred.pandas().xyxy[0]
+        with open(os.path.join(args.output_dir, "_prediction.txt"), "a") as f:
+            f.write(str(img_name)+",")
+            for i, row in result.iterrows():
+                if i == 5:
+                    break
+                
+                f.write(str(row['class'])+" "+str(round(row['xmin']))+" "+str(round(row['ymin']))
+                        +" "+str(round(row['xmax']))+" "+str(round(row['ymax']))+" ")
+            f.write('\n')
+
+        
+

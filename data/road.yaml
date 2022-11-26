@@ -1,4 +1,8 @@
-train: datasets/road2020/Norway_train.txt
-val: datasets/road2020/Norway_val.txt
+names:
+D00
+D10
+D20
+D40
 nc: 4
-names: ['D00','D10','D20','D40']
+train: /cluster/home/mdaaz/RDD2022/rddc2022/datasets/road2020/Norway/train/images
+val: /cluster/home/mdaaz/RDD2022/rddc2022/datasets/road2020/Norway/test/images

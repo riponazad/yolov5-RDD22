@@ -1,8 +1,8 @@
 names:
-D00
-D10
-D20
-D40
+- D00
+- D10
+- D20
+- D40
 nc: 4
 train: /cluster/home/mdaaz/RDD2022/rddc2022/datasets/road2020/Norway/train/images
 val: /cluster/home/mdaaz/RDD2022/rddc2022/datasets/road2020/Norway/test/images

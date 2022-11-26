@@ -27,5 +27,6 @@ if __name__=='__main__':
 
     imgs_list = os.listdir(args.root_dir)
     for img_name in imgs_list:
-        pred = detect(model, img_name)
+        img_path = os.path.join(args.root_dir, img_name)
+        pred = detect(model, img_path)
         break
